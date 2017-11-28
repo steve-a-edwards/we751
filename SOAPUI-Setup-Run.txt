@@ -1,0 +1,14 @@
+cd /home/localuser/Desktop/SoapUI-5.2.1/bin
+./soapui.sh
+
+Import /usr/labfiles/dp/setup/SoapUI/BookingServices-soapui-project.xml
+
+Following SOAPUI Preference / Global Properties to set:
+dp_internal_ip			DP IP
+dp_public_ip			DP IP
+FLY_baggage_port		2068
+FLY_booking_port		9080
+mpgw_booking_port		12nn1
+mpgw_booking_ssl__port	12nn2
+mpgw_booking_client		12nn3
+mpgw_patterns_port		12nn8

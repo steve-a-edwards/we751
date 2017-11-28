@@ -1,0 +1,72 @@
+Steve's Lab Setup Record Notes - WE751 (ERC1.1) 2017-11-21
+
+Check the following install:
+- Ubuntu: labfiles / localuser (sudoer) / LDAP install and setup / JRE 1.7 /
+  SOAPUI (projects)
+- DataPower: domain FLYServices / host-aliases / user, group, domain
+- Skytap remote labs
+=====================================================================================
+Ubuntu 10.04 LTS
+localuser / passw0rd
+- LDAP server
+- /usr/labfiles/dp
+
+Ubuntu users:
+- steve / Gm
+- localuser / w1s
+
+- added localuser through GUI
+- added localuser to sudoers
+    $ sudo adduser localuser sudo
+
+Install OpenLDAP
+    Log in to localuser
+    In Ubuntu terminal window, enter: "sudo apt-get install slapd ldap-utils"
+    Supply password for localuser ("passw0rd")
+    allow download ("y")
+    Specify password for LDAP administrator ("passw0rd")
+Setup LDAP: see text file:
+/Users/steve/Sharing-VM/WE751/dp/setup/LDAP/UbuntuLDAPInstallConfig.txt
+
+Java for SOAPUI
+sudo apt-get install openjdk-7-jre
+
+Copy labfiles folder from shared MacAir folder to Ubuntu:
+ cd /usr
+ sudo mkdir labfiles
+ sudo cp -R /mnt/hgfs/WE751/dp/ labfiles
+
+=====================================================================================
+DP
+- sysadmin / irlpsysadmin
+- host-alias : dp_internal_ip (*** should be static host ***)
+<dp_internal_ip>: IP address of the DataPower gateway development and administrative interface.
+- <nn>: Assigned student number. If no instructor is present, use 01.
+- <studentnn>: Assigned user name and user account. If no instructor is present, use
+  student01.
+- <studentnn_password>: Account password. In most cases, the initial value is the same
+  as the user name. You are prompted to create a password on first use. Write it down.
+- <studentnn_domain>: Application domain that the user account is assigned to. If no
+  instructor is present, use student01_domain.
+- <mpgw_helloworld_port>: 12nn7, where nn is the two-digit student number. This
+  number is the listener port for the HelloWorld MPGW.
+- <dp_WebGUI_port>: Default port is 9090, listening port for the WebGUI.
+
+FLYServices domain (imported from FLYServices.zip IN dev_FLYservices_domain.zip)
+  BookingServiceBackend MPGW
+  - #BookTravel
+  - http://<dp_internal_ip>:9080/BookingService/
+
+  BaggageStatusMockService MPGW
+  - #BaggageStatus
+  - #BagInfo
+  http://<dp_internal_ip>:2068/BaggageService/
+  - no WSDL
+=====================================================================================
+As of June 2016, the environment that is used to support the IBM-supplied images
+and DataPower gateways is Skytap.
+Each student is supplied an Ubuntu student image and a DataPower gateway.
+The supplied image is Ubuntu 14.04 LTS. The desktop uses Unity, which is different
+than the more common Gnome desktop.
+Some hints on using Unity are at:
+http://www.howtogeek.com/113330/how-to-master-ubuntus-unity-desktop-8-things-you-need-to-know/
