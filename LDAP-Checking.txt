@@ -1,0 +1,28 @@
+OpenLDAP is installed for the LDAP exercises.
+
+Passwords:
+The LDAP admin, and student LDAP entry passwords are all "passw0rd".
+On Steve's Ubuntu image localuser password is web1sphere.
+
+LDIF files defined the LDAP DB structure and the LDAP entries.
+
+Files:
+structure: ibmcom-backend.ldif
+entries:   ibmcom.ldif
+which can be found in the Wxxx_ERCx.x_LABFILES.zip.
+
+Verify that the entries are present using a terminal window:
+  $ ldapsearch -LLL -x -D cn=admin,dc=ibm,dc=com -w passw0rd -b "dc=ibm,dc=com" "objectClass=*" cn sn userPassword member
+
+The response should be:
+
+dn: dc=ibm,dc=com
+
+dn: cn=student,dc=ibm,dc=com
+cn: student
+sn: studentsn
+userPassword:: cGFzc3cwcmQ=
+
+dn: cn=grpDP,dc=ibm,dc=com
+cn: grpDP
+member: cn=student,dc=ibm,dc=com 

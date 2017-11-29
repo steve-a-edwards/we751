@@ -1,4 +1,4 @@
-Steve's Lab Setup Record Notes - WE751 (ERC1.1) 2017-11-21
+Steve's Lab Setup Record Notes - WE754 (ERC1.1) 2017-11-21
 
 Check the following install:
 - Ubuntu: labfiles / localuser (sudoer) / LDAP install and setup / JRE 1.7 /
@@ -6,6 +6,12 @@ Check the following install:
 - DataPower: domain FLYServices / host-aliases / user, group, domain
 - Skytap remote labs
 =====================================================================================
+SOAPUI WSS settings can be found by:
+- double clicking the project
+- clicking the WS-Security Configurations tab
+- clicking the Keystores sub-tab
+in here you should see the file /usr/labfiles/dp/WSSecurity/Client.jks
+
 Ubuntu 10.04 LTS
 localuser / passw0rd
 - LDAP server
