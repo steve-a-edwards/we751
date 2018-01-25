@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Demonstration code (Steve EDWARDS, 2015-01-14)
 		- uses xsl:message to link with DataPower logging mechanism
-		- this triggers event (a custom category) 'error-handling-log-category'
-		- this log category needs to be added to the domain
-		- a log target 'error-handling-log-target' subscribes to this event
-		- the log target writes entries to a local file 'logtemp:///error-handling-log-file'
-		In DataPower, this file will be referenced by a transform action.
+		- this code triggers event (a custom category) 'error-handling-log-category'
+		- add this log category to the domain
+		- add a log target 'error-handling-log-target' that subscribes to this event
+		- configure the log target to write entries to a file 'logtemp:///error-handling-log-file'
+		- download this XSL file (can use 'Raw' tab) and upload to local: folder on DataPower
+		- add a Transform action, using this, to a request rule (e.g. to MPGW HelloWorld)
+		- send messages to this service, and then see entries in the log file
  -->
 <xsl:stylesheet version="1.0" 
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
