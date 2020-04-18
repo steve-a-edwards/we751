@@ -1,5 +1,8 @@
 5.7
 ---
+The content of this file may also be seen on:
+https://docs.google.com/document/d/e/2PACX-1vTE6p35WStII5RgrrHtyXzgXO2OhFNHB5htzTb6TBBGKqQ3k8R2AfyPO9rKshFuRZf0_2i49rIOFv6i/pub
+
 See below for:
   Server A - SNI - Success
   Server B - SNI - Success
