@@ -1,0 +1,187 @@
+5.7
+---
+See below for:
+  Server A - SNI - Success
+  Server B - SNI - Success
+  Server C - SNI - Failure, no client mutual authentication
+  Server C - SNI - Success, client mutual authentication
+
+-------------------------------------------------------------------------------------------------------------------------
+Server A - SNI - Success
+-------------------------------------------------------------------------------------------------------------------------
+$ curl --resolve serverA:12012:192.168.1.175 --data-binary @BookingRequest.xml https://serverA:12012/BookingService -k -v
+* Added serverA:12012:192.168.1.175 to DNS cache
+* Hostname was found in DNS cache
+*   Trying 192.168.1.175...
+* Connected to serverA (192.168.1.175) port 12012 (#0)
+* successfully set certificate verify locations:
+*   CAfile: none
+  CApath: /etc/ssl/certs
+* SSLv3, TLS handshake, Client hello (1):
+* SSLv3, TLS handshake, Server hello (2):
+* SSLv3, TLS handshake, CERT (11):
+* SSLv3, TLS handshake, Server key exchange (12):
+* SSLv3, TLS handshake, Server finished (14):
+* SSLv3, TLS handshake, Client key exchange (16):
+* SSLv3, TLS change cipher, Client hello (1):
+* SSLv3, TLS handshake, Finished (20):
+* SSLv3, TLS change cipher, Client hello (1):
+* SSLv3, TLS handshake, Finished (20):
+* SSL connection using ECDHE-RSA-AES256-GCM-SHA384
+* Server certificate:
+* 	 subject: C=US; ST=CA; L=Los Angeles; O=IBM; OU=Software Group; CN=ServerA
+* 	 start date: 2020-04-17 13:50:28 GMT
+* 	 expire date: 2030-04-15 13:50:28 GMT
+* 	 issuer: C=US; ST=CA; L=Los Angeles; O=IBM; OU=Software Group; CN=ServerA
+* 	 SSL certificate verify result: self signed certificate (18), continuing anyway.
+> POST /BookingService HTTP/1.1
+> User-Agent: curl/7.35.0
+> Host: serverA:12012
+> Accept: */*
+> Content-Length: 1289
+> Content-Type: application/x-www-form-urlencoded
+> Expect: 100-continue
+> 
+< HTTP/1.1 100 Continue
+< X-Note: Gateway Ack
+< HTTP/1.1 200 OK
+< X-Backside-Transport: OK OK,FAIL FAIL
+< Connection: Keep-Alive
+< Transfer-Encoding: chunked
+< Content-Type: text/xml
+< Date: Fri, 17 Apr 2020 15:08:57 GMT
+< X-Client-IP: 192.168.1.134
+< X-Global-Transaction-ID: 98358048
+
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope ...
+
+-------------------------------------------------------------------------------------------------------------------------
+Server B - SNI- Success
+-------------------------------------------------------------------------------------------------------------------------
+$ curl --resolve serverB:12012:192.168.1.175 --data-binary @BookingRequest.xml https://serverB:12012/BookingService -k -v
+* Added serverB:12012:192.168.1.175 to DNS cache
+* Hostname was found in DNS cache
+*   Trying 192.168.1.175...
+* Connected to serverB (192.168.1.175) port 12012 (#0)
+* successfully set certificate verify locations:
+*   CAfile: none
+  CApath: /etc/ssl/certs
+* SSLv3, TLS handshake, Client hello (1):
+* SSLv3, TLS handshake, Server hello (2):
+* SSLv3, TLS handshake, CERT (11):
+* SSLv3, TLS handshake, Server key exchange (12):
+* SSLv3, TLS handshake, Server finished (14):
+* SSLv3, TLS handshake, Client key exchange (16):
+* SSLv3, TLS change cipher, Client hello (1):
+* SSLv3, TLS handshake, Finished (20):
+* SSLv3, TLS change cipher, Client hello (1):
+* SSLv3, TLS handshake, Finished (20):
+* SSL connection using ECDHE-RSA-AES256-GCM-SHA384
+* Server certificate:
+* 	 subject: C=US; ST=CA; L=Los Angeles; O=IBM; OU=Software Group; CN=ServerB
+* 	 start date: 2020-04-17 13:51:50 GMT
+* 	 expire date: 2030-04-15 13:51:50 GMT
+* 	 issuer: C=US; ST=CA; L=Los Angeles; O=IBM; OU=Software Group; CN=ServerB
+* 	 SSL certificate verify result: self signed certificate (18), continuing anyway.
+> POST /BookingService HTTP/1.1
+> User-Agent: curl/7.35.0
+> Host: serverB:12012
+> Accept: */*
+> Content-Length: 1289
+> Content-Type: application/x-www-form-urlencoded
+> Expect: 100-continue
+> 
+< HTTP/1.1 100 Continue
+< X-Note: Gateway Ack
+< HTTP/1.1 200 OK
+< X-Backside-Transport: OK OK,FAIL FAIL
+< Connection: Keep-Alive
+< Transfer-Encoding: chunked
+< Content-Type: text/xml
+< Date: Sat, 18 Apr 2020 13:56:39 GMT
+< X-Client-IP: 192.168.1.134
+< X-Global-Transaction-ID: 99967600
+
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+
+-------------------------------------------------------------------------------------------------------------------------
+Server C - SNI - Failure, no client mutual authentication
+-------------------------------------------------------------------------------------------------------------------------
+$ curl --resolve serverC:12012:192.168.1.175 --data-binary @BookingRequest.xml https://serverC:12012/BookingService -k -v
+* Added serverC:12012:192.168.1.175 to DNS cache
+* Hostname was found in DNS cache
+*   Trying 192.168.1.175...
+* Connected to serverC (192.168.1.175) port 12012 (#0)
+* successfully set certificate verify locations:
+*   CAfile: none
+  CApath: /etc/ssl/certs
+* SSLv3, TLS handshake, Client hello (1):
+* SSLv3, TLS handshake, Server hello (2):
+* SSLv3, TLS handshake, CERT (11):
+* SSLv3, TLS handshake, Server key exchange (12):
+* SSLv3, TLS handshake, Request CERT (13):
+* SSLv3, TLS handshake, Server finished (14):
+* SSLv3, TLS handshake, CERT (11):
+* SSLv3, TLS handshake, Client key exchange (16):
+* SSLv3, TLS change cipher, Client hello (1):
+* SSLv3, TLS handshake, Finished (20):
+* SSLv3, TLS alert, Server hello (2):
+* error:14094410:SSL routines:SSL3_READ_BYTES:sslv3 alert handshake failure
+* Closing connection 0
+curl: (35) error:14094410:SSL routines:SSL3_READ_BYTES:sslv3 alert handshake failure
+
+-------------------------------------------------------------------------------------------------------------------------
+Server C - SNI- Success, client mutual authentication
+-------------------------------------------------------------------------------------------------------------------------
+$ curl --resolve serverC:12012:192.168.1.175 --data-binary @BookingRequest.xml https://serverC:12012/BookingService -k -v \
+--tlsv1.2 --cert StudentClientKeyObj-sscert.pem --key StudentClientKeyObj-privkey.pem
+* Added serverC:12012:192.168.1.175 to DNS cache
+* Hostname was found in DNS cache
+*   Trying 192.168.1.175...
+* Connected to serverC (192.168.1.175) port 12012 (#0)
+* successfully set certificate verify locations:
+*   CAfile: none
+  CApath: /etc/ssl/certs
+* SSLv3, TLS handshake, Client hello (1):
+* SSLv3, TLS handshake, Server hello (2):
+* SSLv3, TLS handshake, CERT (11):
+* SSLv3, TLS handshake, Server key exchange (12):
+* SSLv3, TLS handshake, Request CERT (13):
+* SSLv3, TLS handshake, Server finished (14):
+* SSLv3, TLS handshake, CERT (11):
+* SSLv3, TLS handshake, Client key exchange (16):
+* SSLv3, TLS handshake, CERT verify (15):
+* SSLv3, TLS change cipher, Client hello (1):
+* SSLv3, TLS handshake, Finished (20):
+* SSLv3, TLS change cipher, Client hello (1):
+* SSLv3, TLS handshake, Finished (20):
+* SSL connection using ECDHE-RSA-AES256-GCM-SHA384
+* Server certificate:
+* 	 subject: C=US; ST=CA; L=Los Angeles; O=IBM; OU=Software Group; CN=ServerC
+* 	 start date: 2020-04-17 13:53:00 GMT
+* 	 expire date: 2030-04-15 13:53:00 GMT
+* 	 issuer: C=US; ST=CA; L=Los Angeles; O=IBM; OU=Software Group; CN=ServerC
+* 	 SSL certificate verify result: self signed certificate (18), continuing anyway.
+> POST /BookingService HTTP/1.1
+> User-Agent: curl/7.35.0
+> Host: serverC:12012
+> Accept: */*
+> Content-Length: 1289
+> Content-Type: application/x-www-form-urlencoded
+> Expect: 100-continue
+> 
+< HTTP/1.1 100 Continue
+< X-Note: Gateway Ack
+< HTTP/1.1 200 OK
+< X-Backside-Transport: OK OK,FAIL FAIL
+< Connection: Keep-Alive
+< Transfer-Encoding: chunked
+< Content-Type: text/xml
+< Date: Sat, 18 Apr 2020 14:22:59 GMT
+< X-Client-IP: 192.168.1.134
+< X-Global-Transaction-ID: 99995920
+< 
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope 
