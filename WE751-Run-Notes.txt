@@ -124,12 +124,19 @@ sudo chown localuser BookingRequest.xml
 _6.
 curl --resolve serverA:<mpgw_booking_ssl_port>:<dp_public_ip> --data-binary @BookingRequest.xml https://serverA:<mpgw_booking_ssl_port>/BookingService -k -v
 curl --resolve serverA:12002:192.168.1.75 --data-binary @BookingRequest.xml https://serverA:12002/BookingService -k -v
-_7.
+
+For ServerC, client authentication needed, as follows (exercise notes do not cover this!):
+$ curl --resolve serverC:12012:192.168.1.175 --data-binary @BookingRequest.xml https://serverC:12012/BookingService -k -v --tlsv1.2 --cert StudentClientKeyObj-sscert.pem --key 
+
+
+_7. The following does not work (name error):
 curl --data-binary @BookingRequest.xml https://192.168.1.75:12002/BookingService -k -v
+However, if SSL SNI Server Profile (AllServersProfile) has Default server profile (ServerA) it does now work!
 
 5.8. Configure an SSL Proxy Booking MPGW
 HTTP2_12003
 <mpgw_booking_client>: 12003
+*** CHECK SOAPUI Preferences / Global Properties has entry for <mpgw_booking_client>
 
 5.9. Test the SSL connection between the BookingServiceSSLProxy and the BookingServiceProxy
 
